@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎂✨</title>
+  
+  <!-- Google Fonts: Prompt for modern Thai typography & Dancing Script for warm handwritten accents -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Prompt:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons for polished UI controls -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       CANVAS FOR CONFETTI PARTICLES
+       ========================================================= -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- =========================================================
+       FLOATING MUSIC TOGGLE BUTTON
+       ========================================================= -->
+  <div class="music-player-container" id="music-container">
+    <!-- 
+      🎵 [CUSTOMIZE MUSIC HERE]:
+      You can specify a local MP3 file (e.g. "music.mp3") 
+      or an online audio URL in the 'src' attribute below.
+      If no audio is provided or file fails, the website automatically plays 
+      an aesthetic built-in music-box synth via Web Audio API!
+    -->
+    <audio id="bg-music" loop preload="auto">
+      <source src="" type="audio/mpeg">
+    </audio>
+
+    <button id="music-toggle-btn" class="music-btn" aria-label="เปิด/ปิด เพลง">
+      <div class="music-disc" id="music-disc">
+        <i class="fa-solid fa-music music-icon"></i>
+      </div>
+      <span class="music-tooltip" id="music-tooltip">เปิดเพลง 🎵</span>
+    </button>
+  </div>
+
+  <!-- =========================================================
+       FLOATING PASTEL BALLOONS & PARTICLES BACKGROUND
+       ========================================================= -->
+  <div class="floating-decorations" aria-hidden="true">
+    <div class="balloon balloon-1">🎈</div>
+    <div class="balloon balloon-2">🎈</div>
+    <div class="balloon balloon-3">🎈</div>
+    <div class="balloon balloon-4">🎈</div>
+    <div class="balloon balloon-5">🎈</div>
+    <div class="floating-sparkle sparkle-1">✨</div>
+    <div class="floating-sparkle sparkle-2">💖</div>
+    <div class="floating-sparkle sparkle-3">✨</div>
+    <div class="floating-sparkle sparkle-4">🌸</div>
+  </div>
+
+  <!-- =========================================================
+       MAIN CONTAINER
+       ========================================================= -->
+  <main class="page-wrapper">
+
+    <!-- =====================================================
+         1. HERO SECTION
+         ===================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-badge">
+        <span class="badge-sparkle">✨</span>
+        <span class="badge-text">A Very Special Day</span>
+        <span class="badge-sparkle">✨</span>
+      </div>
+
+      <!-- 
+        ✏️ [CUSTOMIZE NAME HERE]:
+        Change the name inside the .birthday-name span below or in script.js!
+      -->
+      <h1 class="hero-title">
+        <span class="title-sub">สุขสันต์วันเกิด</span>
+        <span class="birthday-name" id="display-name">คุณคนพิเศษ</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        ขอให้ทุกวันเต็มไปด้วยรอยยิ้ม ความสุข ความอบอุ่น และสิ่งดีๆ ที่เข้ามาในชีวิตนะ 🎂✨
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="hero-cta-group">
+        <a href="#interactive-cake" class="btn btn-primary">
+          <i class="fa-solid fa-cake-candles"></i> เป่าเค้กวันเกิด
+        </a>
+        <a href="#gift-section" class="btn btn-secondary">
+          <i class="fa-solid fa-gift"></i> เปิดกล่องของขวัญ
+        </a>
+        <a href="#gallery-section" class="btn btn-gold">
+          <i class="fa-solid fa-map-location-dot"></i> เกมเส้นทางความทรงจำ 🏁
+        </a>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-down-hint">
+        <span>เลื่อนลงเพื่อดูเพิ่มเติม</span>
+        <i class="fa-solid fa-chevron-down bounce-icon"></i>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         2. INTERACTIVE CAKE & CANDLE BLOWING SECTION
+         ===================================================== -->
+    <section class="section interactive-section" id="interactive-cake">
+      <div class="section-header">
+        <span class="section-subtitle">Make a Wish 🌟</span>
+        <h2 class="section-title">อธิษฐานแล้วเป่าเทียนกันนะ!</h2>
+        <p class="section-description">ตั้งใจอธิษฐานสิ่งดีๆ แล้วกดปุ่มเป่าเทียน หรือคลิกที่เปลวไฟเพื่อเป่าเทียน</p>
+      </div>
+
+      <div class="cake-stage">
+        <!-- Birthday Cake Graphic -->
+        <div class="cake-container" id="cake-container">
+          <!-- Plate -->
+          <div class="cake-plate"></div>
+
+          <!-- Cake Bottom Layer -->
+          <div class="cake-layer layer-bottom">
+            <div class="icing-stripes"></div>
+            <div class="icing-drips">
+              <span class="drip drip-1"></span>
+              <span class="drip drip-2"></span>
+              <span class="drip drip-3"></span>
+              <span class="drip drip-4"></span>
+              <span class="drip drip-5"></span>
+            </div>
+          </div>
+
+          <!-- Cake Top Layer -->
+          <div class="cake-layer layer-top">
+            <div class="icing-decorations">
+              <span class="berry berry-1">🍓</span>
+              <span class="berry berry-2">🍓</span>
+              <span class="berry berry-3">🍓</span>
+            </div>
+          </div>
+
+          <!-- Candles Container -->
+          <div class="candles-wrapper" id="candles-wrapper">
+            <!-- Candle 1 -->
+            <div class="candle candle-1" data-candle="1">
+              <div class="wick"></div>
+              <div class="flame" id="flame-1"></div>
+              <div class="smoke" id="smoke-1"></div>
+            </div>
+            <!-- Candle 2 (Center) -->
+            <div class="candle candle-2" data-candle="2">
+              <div class="wick"></div>
+              <div class="flame" id="flame-2"></div>
+              <div class="smoke" id="smoke-2"></div>
+            </div>
+            <!-- Candle 3 -->
+            <div class="candle candle-3" data-candle="3">
+              <div class="wick"></div>
+              <div class="flame" id="flame-3"></div>
+              <div class="smoke" id="smoke-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wish Message Box (Appears smoothly after blowing) -->
+        <div class="wish-reveal-card" id="wish-reveal-card">
+          <div class="wish-sparkles">🎉 💖 🌟</div>
+          <h3 class="wish-reveal-title">ขอให้คำอธิษฐานของคุณเป็นจริง! ✨</h3>
+          <p class="wish-reveal-text">
+            สุขสันต์วันเกิดนะ! ขอให้วันเกิดปีนี้เต็มไปด้วยความสุข ความอบอุ่นใจ และรอยยิ้มที่สดใสในทุกๆ วัน
+          </p>
+          <p class="wish-reveal-text">
+            ไม่ว่าจะตั้งเป้าหมายอะไรไว้ ก็ขอให้สำเร็จได้อย่างราบรื่น สุขภาพร่างกายแข็งแรง และมีแต่พลังบวกอยู่รอบตัวเสมอ
+          </p>
+          <p class="wish-reveal-text">
+            ขอบคุณที่เป็นความสดใสและเรื่องราวดีๆ ให้กับทุกคนรอบข้าง ขอให้ทุกวันต่อจากนี้ใจดีกับเธอเสมอนะ! 🎂✨
+          </p>
+        </div>
+
+        <!-- Interactive Blow / Relight Buttons -->
+        <div class="cake-controls">
+          <button id="blow-candle-btn" class="btn btn-gold btn-large">
+            <i class="fa-solid fa-wind"></i> เป่าเทียนวันเกิด (Blow Candles)
+          </button>
+          <button id="relight-candle-btn" class="btn btn-outline btn-small hidden">
+            <i class="fa-solid fa-fire"></i> จุดเทียนใหม่อีกครั้ง
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         3. SURPRISE GIFT BOX SECTION
+         ===================================================== -->
+    <section class="section gift-section" id="gift-section">
+      <div class="section-header">
+        <span class="section-subtitle">Special Surprise 🎁</span>
+        <h2 class="section-title">มีกล่องของขวัญมาส่งถึงคุณ!</h2>
+        <p class="section-description">แตะที่กล่องของขวัญเพื่อเปิดดูเซอร์ไพรส์ข้างใน</p>
+      </div>
+
+      <div class="gift-interactive-wrapper">
+        <div class="gift-box" id="gift-box" role="button" tabindex="0" aria-label="เปิดกล่องของขวัญ">
+          <div class="gift-lid" id="gift-lid">
+            <div class="gift-bow">
+              <div class="bow-left"></div>
+              <div class="bow-right"></div>
+              <div class="bow-center"></div>
+            </div>
+            <div class="ribbon ribbon-horizontal"></div>
+          </div>
+          <div class="gift-base">
+            <div class="ribbon ribbon-vertical"></div>
+          </div>
+        </div>
+
+        <!-- Hidden Surprise Card Inside Gift (Hello Kitty Theme) -->
+        <div class="gift-surprise-card kitty-voucher-card" id="gift-surprise-card">
+          <!-- Top Kitty Mascot SVG -->
+          <div class="kitty-mascot-wrapper">
+            <svg class="kitty-svg" viewBox="0 0 160 120" width="120" height="90" aria-label="Hello Kitty">
+              <g id="kitty-face">
+                <!-- Head outline and fill -->
+                <path d="M 30,55 C 22,25 36,10 52,24 C 65,18 95,18 108,24 C 124,10 138,25 130,55 C 145,75 140,105 105,115 C 80,120 55,118 30,110 C 12,98 12,72 30,55 Z" fill="#ffffff" stroke="#333333" stroke-width="4.5" stroke-linejoin="round" />
+                <!-- Soft pink ear accents -->
+                <path d="M 38,40 C 34,28 42,20 48,28" fill="none" stroke="#ffb6c1" stroke-width="3" stroke-linecap="round" />
+                <path d="M 122,40 C 126,28 118,20 112,28" fill="none" stroke="#ffb6c1" stroke-width="3" stroke-linecap="round" />
+                <!-- Eyes -->
+                <ellipse cx="62" cy="72" rx="4.5" ry="6.5" fill="#333333" />
+                <ellipse cx="98" cy="72" rx="4.5" ry="6.5" fill="#333333" />
+                <!-- Rosy Cheeks -->
+                <ellipse cx="48" cy="80" rx="7" ry="4" fill="#ffccd5" opacity="0.8" />
+                <ellipse cx="112" cy="80" rx="7" ry="4" fill="#ffccd5" opacity="0.8" />
+                <!-- Yellow Nose -->
+                <ellipse cx="80" cy="78" rx="5" ry="3.5" fill="#ffcc00" stroke="#333333" stroke-width="2.5" />
+                <!-- Whiskers -->
+                <path d="M 42,68 L 20,64" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M 40,77 L 16,77" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M 42,86 L 22,90" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M 118,68 L 140,64" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M 120,77 L 144,77" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M 118,86 L 138,90" stroke="#333333" stroke-width="3.5" stroke-linecap="round" />
+                <!-- Kitty Red/Pink Bow -->
+                <g id="kitty-bow" transform="translate(10, 5)">
+                  <path d="M 40,25 C 22,12 18,34 36,36 Z" fill="#ff3366" stroke="#333333" stroke-width="3.5" stroke-linejoin="round" />
+                  <path d="M 44,25 C 62,12 66,34 48,36 Z" fill="#ff3366" stroke="#333333" stroke-width="3.5" stroke-linejoin="round" />
+                  <circle cx="42" cy="30" r="7" fill="#ff3366" stroke="#333333" stroke-width="3.5" />
+                  <circle cx="40" cy="28" r="2.5" fill="#ffffff" opacity="0.6" />
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div class="gift-card-inner">
+            <div class="kitty-badge">🎀 HELLO KITTY BIRTHDAY PASS 🎀</div>
+            <h3 class="gift-card-title kitty-title">คูปองพิเศษสำหรับวันเกิด</h3>
+            
+            <div class="kitty-reward-box">
+              <p class="gift-card-desc kitty-desc">
+                "คูปองพาไปเลี้ยงของอร่อย 1 มื้อใหญ่ + ตามใจคนพิเศษ 1 วันเต็ม! 🍰🍽️"
+              </p>
+            </div>
+
+            <div class="gift-card-footer kitty-footer">
+              <span class="voucher-code kitty-code">CODE: HBD-KITTY-2026</span>
+              <span class="validity kitty-validity">ใช้ได้ตลอดไป ไม่มีวันหมดอายุ 💌💖</span>
+            </div>
+
+            <!-- Download Button -->
+            <div class="coupon-download-wrap">
+              <button id="btn-download-coupon" class="btn btn-kitty btn-large" type="button">
+                <i class="fa-solid fa-cloud-arrow-down"></i> ดาวน์โหลดคูปองเก็บไว้ใช้ 🎀
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <p class="gift-hint-text" id="gift-hint-text">
+          <i class="fa-regular fa-hand-pointer"></i> คลิกที่กล่องเพื่อเปิดของขวัญ
+        </p>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         4. MEMORY TRAIL MINIGAME (เกมลากเส้นเปิดรูป 7 จุดสู่เส้นชัย)
+         ===================================================== -->
+    <section class="section gallery-section" id="gallery-section">
+      <div class="section-header">
+        <span class="section-subtitle">Interactive Memory Game 🎮</span>
+        <h2 class="section-title">เส้นทางความทรงจำสู่เส้นชัย</h2>
+        <p class="section-description">            ลากตัวนำทาง (หรือคลิกที่จุดถัดไป) เพื่อผ่าน <strong>จุดเช็คอิน 8 จุด</strong> ปลดล็อกรูปภาพความทรงจำ ก่อนมุ่งหน้าสู่เส้นชัย 🏁✨
+        </p>
+      </div>
+
+      <!-- Game Stage Box -->
+      <div class="memory-game-card" id="memory-game-card">
+        
+        <!-- Status Bar -->
+        <div class="game-status-bar">
+          <div class="status-left">
+            <div class="status-progress-info">
+              <i class="fa-solid fa-flag-checkered status-icon"></i>
+              <span class="status-label">ความคืบหน้า:</span>
+              <span class="status-count" id="unlocked-count-text">ปลดล็อกแล้ว 0 / 8 รูป</span>
+            </div>
+            <div class="status-progress-track">
+              <div class="status-progress-fill" id="progress-fill-bar"></div>
+            </div>
+          </div>
+
+          <div class="game-hint-pill" id="game-guide-pill">
+            <i class="fa-solid fa-hand-pointer pulse-icon"></i>
+            <span id="game-guide-text">ลากตัวนำทาง หรือแตะจุดที่ 1 เพื่อเริ่ม!</span>
+          </div>
+        </div>
+
+        <!-- Interactive Map Container -->
+        <div class="game-map-wrapper" id="game-map-wrapper">
+          <!-- Background SVG Curved Trail -->
+          <svg class="trail-svg" id="trail-svg" viewBox="0 0 860 460" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffb3c6" />
+                <stop offset="50%" stop-color="#f8b4c4" />
+                <stop offset="100%" stop-color="#e5ba73" />
+              </linearGradient>
+              <filter id="trailGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#f8b4c4" flood-opacity="0.45" />
+              </filter>
+            </defs>
+
+            <!-- Base Road Background -->
+            <path id="trail-road-bg" class="trail-road-bg" 
+                  d="M 80 80 L 250 80 L 470 80 C 650 80 750 80 750 110 C 750 170 750 245 680 245 L 430 245 L 170 255 C 90 260 90 395 270 395 L 495 395 L 720 395" 
+                  filter="url(#trailGlow)" />
+
+            <!-- Active Walked Trail Highlight -->
+            <path id="trail-road-walked" class="trail-road-walked" 
+                  d="M 80 80 L 250 80 L 470 80 C 650 80 750 80 750 110 C 750 170 750 245 680 245 L 430 245 L 170 255 C 90 260 90 395 270 395 L 495 395 L 720 395" />
+
+            <!-- Dotted Direction Guide Line -->
+            <path id="trail-road-dots" class="trail-road-dots" 
+                  d="M 80 80 L 250 80 L 470 80 C 650 80 750 80 750 110 C 750 170 750 245 680 245 L 430 245 L 170 255 C 90 260 90 395 270 395 L 495 395 L 720 395" />
+          </svg>
+
+          <!-- Checkpoint Nodes Layer (Positioned with %) -->
+          <div class="trail-nodes-layer" id="trail-nodes-layer">
+            <!-- Start Node (80, 80) -> 9.3%, 17.4% -->
+            <div class="trail-node node-start unlocked" id="node-start" style="left: 9.3%; top: 17.4%;" title="จุดเริ่มต้น">
+              <div class="node-icon-bubble">
+                <i class="fa-solid fa-play"></i>
+              </div>
+              <span class="node-label">จุดเริ่มต้น</span>
+            </div>
+
+            <!-- Checkpoint 1 (250, 80) -> 29.1%, 17.4% -->
+            <div class="trail-node node-checkpoint current" data-cp="1" id="node-cp-1" style="left: 29.1%; top: 17.4%;" title="จุดเช็ค 1">
+              <div class="node-icon-bubble">
+                <span class="cp-number">1</span>
+                <i class="fa-solid fa-camera cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 1</span>
+            </div>
+
+            <!-- Checkpoint 2 (470, 80) -> 54.6%, 17.4% -->
+            <div class="trail-node node-checkpoint locked" data-cp="2" id="node-cp-2" style="left: 54.6%; top: 17.4%;" title="จุดเช็ค 2">
+              <div class="node-icon-bubble">
+                <span class="cp-number">2</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 2</span>
+            </div>
+
+            <!-- Checkpoint 3 (750, 110) -> 87.2%, 23.9% -->
+            <div class="trail-node node-checkpoint locked" data-cp="3" id="node-cp-3" style="left: 87.2%; top: 23.9%;" title="จุดเช็ค 3">
+              <div class="node-icon-bubble">
+                <span class="cp-number">3</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 3</span>
+            </div>
+
+            <!-- Checkpoint 4 (680, 245) -> 79.1%, 53.3% -->
+            <div class="trail-node node-checkpoint locked" data-cp="4" id="node-cp-4" style="left: 79.1%; top: 53.3%;" title="จุดเช็ค 4">
+              <div class="node-icon-bubble">
+                <span class="cp-number">4</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 4</span>
+            </div>
+
+            <!-- Checkpoint 5 (430, 245) -> 50.0%, 53.3% -->
+            <div class="trail-node node-checkpoint locked" data-cp="5" id="node-cp-5" style="left: 50.0%; top: 53.3%;" title="จุดเช็ค 5">
+              <div class="node-icon-bubble">
+                <span class="cp-number">5</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 5</span>
+            </div>
+
+            <!-- Checkpoint 6 (170, 255) -> 19.8%, 55.4% -->
+            <div class="trail-node node-checkpoint locked" data-cp="6" id="node-cp-6" style="left: 19.8%; top: 55.4%;" title="จุดเช็ค 6">
+              <div class="node-icon-bubble">
+                <span class="cp-number">6</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 6</span>
+            </div>
+
+            <!-- Checkpoint 7 (270, 395) -> 31.4%, 85.9% -->
+            <div class="trail-node node-checkpoint locked" data-cp="7" id="node-cp-7" style="left: 31.4%; top: 85.9%;" title="จุดเช็ค 7">
+              <div class="node-icon-bubble">
+                <span class="cp-number">7</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 7</span>
+            </div>
+
+            <!-- Checkpoint 8 (495, 395) -> 57.5%, 85.9% -->
+            <div class="trail-node node-checkpoint locked" data-cp="8" id="node-cp-8" style="left: 57.5%; top: 85.9%;" title="จุดเช็ค 8">
+              <div class="node-icon-bubble">
+                <span class="cp-number">8</span>
+                <i class="fa-solid fa-lock cp-icon"></i>
+              </div>
+              <span class="node-label">รูปที่ 8</span>
+            </div>
+
+            <!-- Finish Line Node (720, 395) -> 83.7%, 85.9% -->
+            <div class="trail-node node-finish locked" id="node-finish" style="left: 83.7%; top: 85.9%;" title="เส้นชัย">
+              <div class="node-icon-bubble finish-flag">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </div>
+              <span class="node-label finish-label">เส้นชัย 🏁</span>
+            </div>
+
+            <!-- Draggable Avatar Character -->
+            <div class="trail-avatar" id="trail-avatar" style="left: 9.3%; top: 17.4%;" role="button" tabindex="0" aria-label="ลากตัวนำทางเพื่อเดินทาง">
+              <div class="avatar-inner">
+                <span class="avatar-emoji">💖</span>
+              </div>
+              <div class="avatar-pulse-ring"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Bottom Controls -->
+        <div class="game-controls-bar">
+          <button id="btn-reset-game" class="btn btn-outline btn-small">
+            <i class="fa-solid fa-rotate-left"></i> เล่นใหม่อีกรอบ
+          </button>
+        </div>
+      </div>
+
+      <!-- Locked Teaser Banner (Shown while playing) -->
+      <div class="album-locked-teaser" id="album-locked-teaser">
+        <div class="teaser-lock-icon">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div class="teaser-content">
+          <h3 class="teaser-title">อัลบั้มภาพความทรงจำถูกซ่อนไว้ 🎁✨</h3>
+          <p class="teaser-desc">
+            ร่วมสนุกเล่นเกมลากเส้นผ่านจุดเช็คอินทั้ง 8 จุดสู่เส้นชัยเพื่อปลดล็อกชมอัลบั้มภาพทั้งหมด!
+          </p>
+        </div>
+      </div>
+
+      <!-- Photo Collection Gallery Container (Hidden initially, unlocked when reaching finish line) -->
+      <div class="unlocked-album-container hidden" id="unlocked-album-container">
+        <div class="unlocked-gallery-header">
+          <div class="album-unlocked-badge">🎉 Mission Complete 🎉</div>
+          <h3 class="sub-gallery-title"><i class="fa-solid fa-heart"></i> อัลบั้มภาพความทรงจำทั้ง 8 ช่วงเวลา</h3>
+          <p class="sub-gallery-desc">ยินดีด้วยที่พิชิตเส้นทางสำเร็จ! คลิกที่รูปเพื่อเปิดดูแบบขยายใหญ่ได้เลย</p>
+        </div>
+
+        <!-- 8 Photos Grid -->
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Rendered dynamically by script.js CONFIG.photos -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         5. WISHES & MESSAGE GREETING CARD
+         ===================================================== -->
+    <section class="section message-section" id="message-section">
+      <div class="section-header">
+        <span class="section-subtitle">Heartfelt Note 💌</span>
+        <h2 class="section-title">ข้อความอวยพรจากใจ</h2>
+        <p class="section-description">การ์ดอวยพรที่เขียนขึ้นมาเพื่อคุณโดยเฉพาะ</p>
+      </div>
+
+      <!-- Envelope / Greeting Card Wrapper -->
+      <div class="greeting-card-container">
+        <div class="card-decorative-tape"></div>
+
+        <div class="greeting-card">
+          <!-- Card Corner Ornaments -->
+          <div class="card-corner top-left"></div>
+          <div class="card-corner top-right"></div>
+          <div class="card-corner bottom-left"></div>
+          <div class="card-corner bottom-right"></div>
+
+          <!-- Wax Seal Badge -->
+          <div class="wax-seal">
+            <span class="seal-icon">🎂</span>
+          </div>
+
+          <div class="card-content">
+            <p class="card-salutation">
+              ถึง <span class="recipient-name" id="card-recipient-name">คุณคนพิเศษ</span>,
+            </p>
+
+            <!-- 
+              📝 [CUSTOMIZE GREETING MESSAGE HERE]:
+              Edit this 3-4 sentence birthday message to make it truly personal!
+            -->
+            <div class="card-body-text" id="greeting-message-text">
+              <p>
+                สุขสันต์วันเกิดนะ! ขอให้วันเกิดปีนี้เต็มไปด้วยความสุข ความอบอุ่นใจ และรอยยิ้มที่สดใสในทุกๆ วัน
+              </p>
+              <p>
+                ไม่ว่าจะตั้งเป้าหมายอะไรไว้ ก็ขอให้สำเร็จได้อย่างราบรื่น สุขภาพร่างกายแข็งแรง และมีแต่พลังบวกอยู่รอบตัวเสมอ
+              </p>
+              <p>
+                ขอบคุณที่เป็นความสดใสและเรื่องราวดีๆ ให้กับทุกคนรอบข้าง ขอให้ทุกวันต่อจากนี้ใจดีกับเธอเสมอนะ!
+              </p>
+            </div>
+
+            <!-- Signature block -->
+            <div class="card-signature">
+              <span class="signature-date" id="current-date-display">กันยายน 2026</span>
+              <p class="signature-from">ด้วยรักและความหวังดีเสมอ 💖</p>
+              <div class="signature-handwritten">Your Best Friend</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Send Confetti Burst Button -->
+        <div class="card-actions">
+          <button id="celebrate-btn" class="btn btn-primary btn-large">
+            <i class="fa-solid fa-sparkles"></i> จุดพลุเฉลิมฉลองอีกรอบ! (Confetti) 🎊
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       CHECKPOINT PHOTO REVEAL POPUP MODAL
+       ========================================================= -->
+  <div class="checkpoint-popup-modal" id="checkpoint-popup-modal" aria-hidden="true">
+    <div class="checkpoint-popup-backdrop" id="checkpoint-popup-backdrop"></div>
+    <div class="checkpoint-popup-card">
+      <button class="popup-close-btn" id="popup-close-btn" aria-label="ปิด">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="popup-badge" id="popup-badge">✨ ปลดล็อกความทรงจำสำเร็จ! ✨</div>
+      
+      <div class="popup-image-wrap">
+        <img src="" alt="Checkpoint Memory" id="popup-img" class="popup-img">
+        <video src="" id="popup-video" class="popup-img popup-video" controls playsinline style="display:none;"></video>
+      </div>
+      
+      <div class="popup-info">
+        <span class="popup-memory-tag" id="popup-memory-tag">Memories 01</span>
+        <h4 class="popup-caption" id="popup-caption">ข้อความบรรยายความทรงจำ</h4>
+      </div>
+
+      <div class="popup-actions">
+        <button id="popup-continue-btn" class="btn btn-primary btn-large">
+          เดินทางต่อไปยังจุดถัดไป! 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FINISH LINE VICTORY MODAL
+       ========================================================= -->
+  <div class="victory-popup-modal" id="victory-popup-modal" aria-hidden="true">
+    <div class="checkpoint-popup-backdrop" id="victory-popup-backdrop"></div>
+    <div class="victory-popup-card">
+      <div class="victory-trophy-icon">🏆✨</div>
+      <h3 class="victory-title">ยินดีด้วย! คุณถึงเส้นชัยแล้ว 🏁🎉</h3>
+      <p class="victory-desc">
+        คุณได้เดินทางผ่านความทรงจำที่แสนอบอุ่นครบทั้ง 8 จุดแล้ว!<br>
+        ขอให้ทุกก้าวบนเส้นทางชีวิตต่อจากนี้ ยังคงเต็มไปด้วยความทรงจำที่แสนอบอุ่นแบบนี้ทุกวันนะ T...T<br>
+        รอยยิ้ม และความสุขในทุกๆ วันนะ 💖✨
+      </p>
+      <div class="victory-actions">
+        <button id="victory-view-gallery-btn" class="btn btn-gold btn-large">
+          <i class="fa-solid fa-images"></i> ชมภาพความทรงจำทั้งหมด
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       PHOTO LIGHTBOX MODAL
+       ========================================================= -->
+  <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="ปิดภาพขยาย">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="ภาพก่อนหน้า">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="lightbox-image-container">
+        <img src="" alt="ภาพขยาย" id="lightbox-img" class="lightbox-img">
+        <video src="" id="lightbox-video" class="lightbox-img lightbox-video" controls playsinline style="display:none;"></video>
+        <p class="lightbox-caption" id="lightbox-caption"></p>
+      </div>
+      <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="ภาพถัดไป">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="page-footer">
+    <p>Crafted with lots of love & warm wishes 💕 | Happy Birthday!</p>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
