@@ -25,7 +25,7 @@ const CONFIG = {
   ],
 
   // 1.5 ลิงก์เพลงเบื้องหลัง (Background Music)
-  musicUrl: "", 
+  musicUrl: "music/SinBad_mp3.mp3", 
 
   // 1.6 แกลเลอรีรูปภาพความทรงจำ 7 รูป สำหรับ 7 จุดเช็คอินในเกม
   photos: [
